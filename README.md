@@ -5,7 +5,7 @@ Useful commands for bioawk for bioinformaticians.
 
 Working with tools like `awk`, `uniq`, `cut`, `sed`, and other simple tools on the command line are often the fastest way to get an idea of your data and often sufficient for simple analyses. This is faster than writing a new script for each analysis that you would like to do.
 
-Below are examples of useful one-liners that I often need or have found useful. Many of these are not immediately obvious to new `awk` users, but hopefully they are useful!
+Below are examples of useful one-liners that I often need or have found useful. Many of these are not immediately obvious to new `awk` users, but hopefully they are useful! For more tips, @vsbuffalo [has a great tutorial here](https://github.com/vsbuffalo/bioawk-tutorial).
 
 ## Examples
 
