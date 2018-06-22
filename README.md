@@ -15,3 +15,10 @@ Below are examples of useful one-liners that I often need or have found useful. 
 ```
 bioawk -cfastx '{s=sprintf("%*s",length($seq),"");gsub(/ /,"!",s); printf  "@%s\n%s\n+\n%s\n", $name, $seq, s}' reads.fa
 ```
+
+- Convert a single-line `fasta` to a multiline `fasta`.
+  - This is not fast by any means, but it works.
+
+```
+bioawk -cfastx '{system("printf \">%s\"" $name " >> multiline.fasta"); system("echo '' >> multiline.fasta"); system("echo " $seq " | fold -w 60 - >> multiline.fasta") }' singleline.fasta
+```
