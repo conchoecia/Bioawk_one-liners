@@ -17,7 +17,8 @@ bioawk -cfastx '{s=sprintf("%*s",length($seq),"");gsub(/ /,"!",s); printf  "@%s\
 ```
 
 - Convert a single-line `fasta` to a multiline `fasta`.
-  - This is not fast by any means, but it works.
+  - This is extremely slow. Try `reformat.sh` in [bbmap](https://sourceforge.net/projects/bbmap/) instead!
+  - `reformat.sh in=your_file.fa out=new_file.fa fastawrap=NN`
 
 ```
 bioawk -cfastx '{system("printf \">%s\"" $name " >> multiline.fasta"); system("echo '' >> multiline.fasta"); system("echo " $seq " | fold -w 60 - >> multiline.fasta") }' singleline.fasta
