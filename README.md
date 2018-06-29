@@ -7,7 +7,7 @@ Working with tools like `awk`, `uniq`, `cut`, `sed`, and other simple tools on t
 
 Below are examples of useful one-liners that I often need or have found useful. Many of these are not immediately obvious to new `awk` users, but hopefully they are useful! For more tips, @vsbuffalo [has a great tutorial here](https://github.com/vsbuffalo/bioawk-tutorial).
 
-## Examples
+## Examples - fasta/fastq
 
 - Convert a `fasta` to `fastq`, inserting `!` characters for the base quality scores. 
   - This is useful for PacBio Sequel data (since there are no quality scores), and instances in which a parser requires the seqs from a `fastq` but doesn't use quality information.
@@ -22,4 +22,11 @@ bioawk -cfastx '{s=sprintf("%*s",length($seq),"");gsub(/ /,"!",s); printf  "@%s\
 
 ```
 bioawk -cfastx '{system("printf \">%s\"" $name " >> multiline.fasta"); system("echo '' >> multiline.fasta"); system("echo " $seq " | fold -w 60 - >> multiline.fasta") }' singleline.fasta
+```
+
+- Get the longest sequence length in a fasta/q file
+  - adapted from `https://unix.stackexchange.com/questions/24509`
+
+```
+bioawk -cfastx 'length($seq) > max_length {max_length = length($seq)} END{print max_length}' myfile.fastx
 ```
