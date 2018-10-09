@@ -30,3 +30,15 @@ bioawk -cfastx '{system("printf \">%s\"" $name " >> multiline.fasta"); system("e
 ```
 bioawk -cfastx 'length($seq) > max_length {max_length = length($seq)} END{print max_length}' myfile.fastx
 ```
+
+- Get a ACGNT-by-position count of fastq reads. Useful for looking at biases in a subset of sequences
+
+```
+bioawk -cfastx 'BEGIN{for (i=1; i<=150; i++){A[i]=0; C[i]=0; G[i]=0; N[i]=0; T[i]=0}} {for ( i = 1; i <= length($seq); i++) {thisChar = substr($seq, i,1); if (thisChar=="A"){A[i]+=1} else if (thisChar=="C"){C[i]+=1} else if (thisChar=="G"){G[i]+=1} else if (thisChar=="N"){N[i]+=1} else if (thisChar=="T"){T[i]+=1} }} END{printf("A\tC\tG\tN\tT\n"); for (i=1; i<=150; i++) {printf("%s\t%s\t%s\t%s\t%s\n", A[i], C[i], G[i], N[i], T[i])}}'
+```
+
+- Same thing as above but works with sequences only as input. Good for grepping sequences out of a fastq and analyzing that subset
+
+```
+bioawk -cfastx '{print($seq)}' reads.fastq.gz | grep "GATC" | head | awk 'BEGIN{for (i=1; i<=150; i++){A[i]=0; C[i]=0; G[i]=0; N[i]=0; T[i]=0}} {for ( i = 1; i <= length($0); i++) {thisChar = substr($0, i,1); if (thisChar=="A"){A[i]+=1} else if (thisChar=="C"){C[i]+=1} else if (thisChar=="G"){G[i]+=1} else if (thisChar=="N"){N[i]+=1} else if (thisChar=="T"){T[i]+=1} }} END{printf("A\tC\tG\tN\tT\n"); for (i=1; i<=150; i++) {printf("%s\t%s\t%s\t%s\t%s\n", A[i], C[i], G[i], N[i], T[i])}}'
+```
